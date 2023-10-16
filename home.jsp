@@ -31,6 +31,12 @@
         </form>
         <form action="delete.jsp">
             <button type="submit">Delete</button>
+	</form>
+	<form action="home1.jsp">
+            <button type="submit">Feedback</button>
+        </form>
+	<form action="enroll.jsp">
+            <button type="submit">Course Enroll</button>
         </form>
         <button onclick="goBack()">Back</button>
     </center>
