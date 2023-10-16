@@ -18,7 +18,7 @@
   form input[type="text"],
     form textarea {
       width: 450px;
-      height: 50px;
+      height: 30px;
       padding: 2px;
       border-radius: 10px;
       /* ... Other existing styles ... */
@@ -68,7 +68,21 @@ function goBack() {
     <input type="text" id="marks" name="marks" placeholder="Enter Marks" required pattern="\d+" 
            oninvalid="this.value === '' ? showCustomValidity(this) : showCustomValidity(this, 'Only numbers allowed.')"
            oninput="clearCustomValidity(this)">
-	
+		<label for="course">Enter Course:</label>
+<input type="text" id="course" name="course" placeholder="Enter Course" required pattern="[A-Za-z\s]+"
+   oninvalid="showCustomValidity(this, 'Only alphabets allowed.')"
+   oninput="clearCustomValidity(this)">
+
+<label for="division">Enter Division:</label>
+<input type="text" id="division" name="division" placeholder="Enter Division" required pattern="[A-Za-z\s]+"
+   oninvalid="showCustomValidity(this, 'Only alphabets allowed.')"
+   oninput="clearCustomValidity(this)">
+
+<label for="achievements">Enter Achievements:</label>
+<textarea id="achievements" name="achievements" placeholder="Enter Achievements" required
+   oninvalid="this.value === '' ? showCustomValidity(this, 'Achievements cannot be empty.') : clearCustomValidity(this)"
+   oninput="clearCustomValidity(this)">
+</textarea>	
    
 <br><br>
 <button type="submit" name = "btn">Add</button>
@@ -84,6 +98,10 @@ if (request.getParameter("btn") != null)
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		String name = request.getParameter("name");
 		String marks = request.getParameter("marks");
+		String course = request.getParameter("course");
+		String division = request.getParameter("division");
+		String achievements = request.getParameter("achievements");
+
 		
 		
 		DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());	
@@ -98,12 +116,14 @@ if (request.getParameter("btn") != null)
      	 // Feedback already exists for the given roll number
       	out.println("Record already submitted for Roll No: " + rno);
     	} 	else {
-    
-    		String sql = "insert into student values (?,?,?)";
+   		 String sql = "INSERT INTO student (rno, name, marks, course, division, achievements) VALUES (?,?,?,?,?,?)";
 		PreparedStatement pst = con.prepareStatement(sql);
-		pst.setInt(1,rno);
-		pst.setString (2,name);
-		pst.setString(3,marks);
+		pst.setInt(1, rno);
+		pst.setString(2, name);
+		pst.setString(3, marks);
+		pst.setString(4, course);
+		pst.setString(5, division);
+		pst.setString(6, achievements);
 		
 		pst.executeUpdate(); 	
 		con.close();
